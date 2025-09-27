@@ -1,3 +1,5 @@
+const API_URL = "https://ai-summariser-backend-f9zy.onrender.com/api/summarise";
+
 // ---------------- URL Summarization ----------------
 async function summarizeURL() {
   const url = document.getElementById("urlInput").value;
@@ -11,7 +13,7 @@ async function summarizeURL() {
   summaryBox.innerHTML = "⏳ Summarizing URL...";
 
   try {
-    const response = await fetch("http://localhost:3000/api/summarise/url", {
+    const response = await fetch(`${API_URL}/url`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ url }),
@@ -41,7 +43,7 @@ async function uploadFile() {
   summaryBox.innerHTML = "⏳ Uploading and summarizing file...";
 
   try {
-    const response = await fetch("http://localhost:3000/api/summarise/file", {
+    const response = await fetch(`${API_URL}/file`, {
       method: "POST",
       body: formData,
     });
@@ -53,6 +55,8 @@ async function uploadFile() {
     summaryBox.innerHTML = "❌ Error connecting to backend.";
   }
 }
+
+// ---------------- Copy & Share ----------------
 function copySummary() {
   const summary = document.getElementById("summaryBox").innerText;
   if (!summary) return alert("No summary to copy!");
