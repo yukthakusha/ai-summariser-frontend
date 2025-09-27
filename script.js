@@ -1,5 +1,31 @@
 const API_URL = "https://ai-summariser-backend-f9zy.onrender.com/api/summarise";
 
+// ---------------- Helper: Display summary as points ----------------
+function displaySummary(summary) {
+  const summaryBox = document.getElementById("summaryBox");
+  if (!summary) {
+    summaryBox.innerHTML = "❌ No summary available.";
+    return;
+  }
+
+  // Split text into lines or sentences
+  const points = summary.split(/\n|(?<=\.)\s+/).filter(p => p.trim() !== "");
+
+  // Create bullet list
+  const ul = document.createElement("ul");
+  ul.style.paddingLeft = "20px";
+  ul.style.lineHeight = "1.6";
+
+  points.forEach(point => {
+    const li = document.createElement("li");
+    li.textContent = point.trim();
+    ul.appendChild(li);
+  });
+
+  summaryBox.innerHTML = "";
+  summaryBox.appendChild(ul);
+}
+
 // ---------------- URL Summarization ----------------
 async function summarizeURL() {
   const url = document.getElementById("urlInput").value;
@@ -19,15 +45,17 @@ async function summarizeURL() {
       body: JSON.stringify({ url }),
     });
 
+    if (!response.ok) throw new Error("Backend error");
+
     const data = await response.json();
-    summaryBox.innerHTML = data.summary || "❌ Error generating summary.";
+    displaySummary(data.summary);
   } catch (err) {
-    console.error(err);
+    console.error("URL summarization error:", err);
     summaryBox.innerHTML = "❌ Error connecting to backend.";
   }
 }
 
-// ---------------- File Summarization ----------------
+// ---------------- File Summarization (PDF/DOCX) ----------------
 async function uploadFile() {
   const fileInput = document.getElementById("fileInput");
   const summaryBox = document.getElementById("summaryBox");
@@ -48,10 +76,12 @@ async function uploadFile() {
       body: formData,
     });
 
+    if (!response.ok) throw new Error("Backend error");
+
     const data = await response.json();
-    summaryBox.innerHTML = data.summary || "❌ Error generating summary.";
+    displaySummary(data.summary);
   } catch (err) {
-    console.error(err);
+    console.error("File summarization error:", err);
     summaryBox.innerHTML = "❌ Error connecting to backend.";
   }
 }
