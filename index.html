@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Summarizer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>AI Summarizer</h1>
+    <p>Upload a file or enter a URL to get a quick summary.</p>
+  </header>
+
+  <main>
+    <!-- Upload Section -->
+    <section class="card upload-section">
+      <h2>Upload File</h2>
+      <input type="file" id="fileInput" accept=".pdf,.docx,.ppt,.pptx">
+      <button onclick="uploadFile()">Summarize File</button>
+    </section>
+
+    <!-- URL Section -->
+    <section class="card url-section">
+      <h2>Summarize from URL</h2>
+      <input type="text" id="urlInput" placeholder="Enter webpage URL">
+      <button onclick="summarizeURL()">Summarize URL</button>
+    </section>
+
+    <!-- Output Section -->
+    <!-- Output Section -->
+<section class="output-section card">
+  <h2>Summary</h2>
+  <div id="summaryBox">Your summary will appear here...</div>
+  <div class="summary-actions">
+    <button onclick="copySummary()">Copy</button>
+    <button onclick="shareSummary()">Share</button>
+  </div>
+</section>
+
+  </main>
+
+  <footer>
+    <p>Built with ❤️ using AI</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
